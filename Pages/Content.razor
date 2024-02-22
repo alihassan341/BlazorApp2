@@ -27,35 +27,39 @@
         </div>
     </div>
 
-    <div class="w-100 mt-3" id="contentBody">
-        @if (!string.IsNullOrEmpty(ElementName))
+    <div class="w-100 h-88vh mt-3 overflow-auto" id="contentBody">
+        @if (showEmailInput)
         {
-            @switch (ElementName)
-            {
-              case "Email":
-                <Email_Input />
-              break;
-               case "Region":
-                <Region_Input />
-              break;
-              case "Cellphone":
-                <Cellphone_Input />
-              break;
-              case "URL":
-                <URL_Input />
-              break;
-                case "Id Number":
-                <Id_Input />
-              break;
-              default:
-                <p>No component found for @ElementName</p>
-              break;
-           } 
+            <Email_Input />
+        }
+
+        @if (showRegionInput)
+        {
+            <Region_Input />
+        }
+
+        @if (showCellphoneInput)
+        {
+            <Cellphone_Input />
+        }
+
+        @if (showURLInput)
+        {
+            <URL_Input />
+        }
+
+        @if (showIdInput)
+        {
+            <Id_Input />
         }
     </div>
 </div>
 
 <style>
+
+    .h-88vh{
+        height: 88vh !important;
+    }
 
     .border-b-black{
         border-bottom: 2px solid black !important
@@ -68,9 +72,41 @@
 
 
 @code {
+
     [Parameter]
     public string ElementName { get; set; } = "";
 
+    private bool showEmailInput = false;
+    private bool showRegionInput = false;
+    private bool showCellphoneInput = false;
+    private bool showURLInput = false;
+    private bool showIdInput = false;
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        // Set the flag for the specified element
+        switch (ElementName)
+        {
+            case "Email":
+                showEmailInput = true;
+                break;
+            case "Region":
+                showRegionInput = true;
+                break;
+            case "Cellphone":
+                showCellphoneInput = true;
+                break;
+            case "URL":
+                showURLInput = true;
+                break;
+            case "Id Number":
+                showIdInput = true;
+                break;
+            default:
+                break;
+        }
+    }
+
 }
-
-
