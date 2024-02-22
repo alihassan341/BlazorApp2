@@ -2,16 +2,15 @@
 
 <div class="d-flex h-100 w-100">
     <div class="left-menu w-16 overflow-auto h-100">
-            <Sidebar/>
+         <Sidebar ElementEvent="EventValue"/>
     </div>
 
-    <div class="content w-64">
-        <Content/>
+    <div class="content w-64 p-0">
+        <Content ElementName="@EventRoute" />
     </div>
 
     <div class="setting w-20">
         <Setting/>
-        
     </div>
 </div>
 
@@ -48,3 +47,16 @@
         width: 16% !important;
     }
 </style>
+
+@code{
+
+    public string EventRoute = "";
+
+    private void EventValue(string val)
+    {
+        if(val != null)
+        {
+            EventRoute = val;
+        }
+    }
+}

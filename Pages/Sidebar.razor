@@ -73,16 +73,7 @@
 </style>
 
 @code {
-    
 
-    
-    public int currentCount = 0;
-
-    private void IncrementCount()
-    {
-        currentCount++;
-    }
-    
     List<buttonCls> containerBtns = new List<buttonCls>
     {
         new buttonCls { Icon = "fa fa-envelope-o", Name = "Grid" },
@@ -119,13 +110,13 @@
         new buttonCls { Icon = "fa fa-drivers-license-o", Name = "Id Number" }
     };
 
-    private void CreateElement(string? elementName)
+    [Parameter]
+    public EventCallback<string> ElementEvent { get; set; }
+
+    private async void CreateElement(string? elementName)
     {
         if (elementName != null) {
-            Console.WriteLine($"Creating element Successfully: {elementName}");
-        }
-        else {   
-            Console.WriteLine("Name is Null...!");
+            await ElementEvent.InvokeAsync(elementName);
         }
     }
     private class buttonCls

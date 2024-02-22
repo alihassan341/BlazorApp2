@@ -2,6 +2,8 @@
 <div class="overflow-auto">
     <div class="row d-flex align-items-center border-b-black p-2 w-100">
         <div class="col-md-4 f-s-12">
+            @* <button type="button" class="btn" data-bs-toggle="popover" data-bs-title="Popover title" data-bs-content="Testing Popover">
+            </button> *@
             <i class="fa-solid fa-brush text-light mx-1 pointer"></i>
             <i class="fa-brands fa-squarespace text-light pointer"></i>
             <span class="mx-2 mb-0 text-danger">Layout: 2</span>
@@ -26,6 +28,30 @@
     </div>
 
     <div class="w-100 mt-3" id="contentBody">
+        @if (!string.IsNullOrEmpty(ElementName))
+        {
+            @switch (ElementName)
+            {
+              case "Email":
+                <Email_Input />
+              break;
+               case "Region":
+                <Region_Input />
+              break;
+              case "Cellphone":
+                <Cellphone_Input />
+              break;
+              case "URL":
+                <URL_Input />
+              break;
+                case "Id Number":
+                <Id_Input />
+              break;
+              default:
+                <p>No component found for @ElementName</p>
+              break;
+           } 
+        }
     </div>
 </div>
 
@@ -40,5 +66,11 @@
     }
 </style>
 
+
+@code {
+    [Parameter]
+    public string ElementName { get; set; } = "";
+
+}
 
 
