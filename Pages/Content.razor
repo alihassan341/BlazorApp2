@@ -4,17 +4,17 @@
         <div class="col-md-4 f-s-12">
             @* <button type="button" class="btn" data-bs-toggle="popover" data-bs-title="Popover title" data-bs-content="Testing Popover">
             </button> *@
-            <i class="fa-solid fa-brush text-light mx-1 pointer"></i>
+            <i class="fa-solid fa-brush text-light mx-1 pointer" @onclick="AllRemove"></i>
             <i class="fa-brands fa-squarespace text-light pointer"></i>
             <span class="mx-2 mb-0 text-danger">Layout: 2</span>
         </div>
 
         <div class="col-md-4 text-center">
             <div class="btn-group" role="group">
-                <button class="btn btn-outline-info btn-sm">
+                <button class="btn btn-outline-info btn-sm" @onclick="(() => setDisplay(true))">
                     <i class="fa-solid fa-desktop"></i>
                 </button>
-                <button class="btn btn-outline-light btn-sm">
+                <button class="btn btn-outline-light btn-sm" @onclick="() => setDisplay(false)">
                     <i class="fa-solid fa-mobile-screen-button"></i>
                 </button>
             </div>
@@ -26,8 +26,8 @@
             <i class="fa-regular fa-eye text-light pointer"></i>
         </div>
     </div>
-
-    <div class="w-100 h-88vh mt-3 overflow-auto" id="contentBody">
+    <div class="d-flex justify-content-center">
+        <div class="@displayClasses" id="contentBody">
         @if (showEmailInput)
         {
             <Email_Input />
@@ -53,6 +53,7 @@
             <Id_Input />
         }
     </div>
+    </div>
 </div>
 
 <style>
@@ -68,6 +69,10 @@
     .f-s-12{
         font-size: 12px !important;
     }
+
+    .pointer{
+        cursor: pointer !important;
+    }
 </style>
 
 
@@ -75,6 +80,8 @@
 
     [Parameter]
     public string ElementName { get; set; } = "";
+
+    private string displayClasses = "h-88vh mt-3 overflow-auto w-100";
 
     private bool showEmailInput = false;
     private bool showRegionInput = false;
@@ -86,7 +93,6 @@
     {
         base.OnParametersSet();
 
-        // Set the flag for the specified element
         switch (ElementName)
         {
             case "Email":
@@ -109,4 +115,24 @@
         }
     }
 
+    private void AllRemove()
+    {
+        showEmailInput = false;
+        showRegionInput = false;
+        showCellphoneInput = false;
+        showURLInput = false;
+        showIdInput = false;
+    }
+
+    private void setDisplay(bool display)
+    {
+        if (display)
+        {
+            displayClasses = "h-88vh mt-3 overflow-auto w-100";
+        }
+        else
+        {
+            displayClasses = "h-88vh mt-3 overflow-auto w-50";
+        }
+    }
 }
