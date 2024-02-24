@@ -13,7 +13,7 @@
                      data-bs-parent="#defaultAccordion">
                     @foreach (var obj in defautBtn)
                     {
-                     <button class="btn btn-outline-secondary btn-sm m-1" @onclick="(() => CreateElement(obj.Name))">
+                    <button class="btn btn-outline-secondary basic-buttons m-1" @onclick="(() => CreateElement(obj.Name))">
                         
                              <i class="@obj.Icon"></i>
                             @obj.Name
@@ -70,6 +70,12 @@
     .f-s-13{
         font-size: 13px !important;
     }
+
+    .basic-buttons{
+        width: 85px !important;
+        font-size: 13px !important;
+        font-weight: 600;
+    }
 </style>
 
 @code {
@@ -104,10 +110,10 @@
     private List<buttonCls> defautBtn = new List<buttonCls>
     {
         new buttonCls { Icon = "fa fa-envelope-o", Name = "Email" },
-        new buttonCls { Icon = "fa fa-phone-square", Name = "Cellphone" },
+        new buttonCls { Icon = "fa fa-phone-square", Name = "Phone" },
         new buttonCls { Icon = "fa fa-pencil", Name = "URL" },
         new buttonCls { Icon = "fa fa-location-arrow", Name = "Region" },
-        new buttonCls { Icon = "fa fa-drivers-license-o", Name = "Id Number" }
+        new buttonCls { Icon = "fa fa-drivers-license-o", Name = "Id" }
     };
 
     [Parameter]
