@@ -1,5 +1,5 @@
-﻿
-<div class="w-100 px-3 pb-1">
+﻿@using static Email_Input
+@* <div class="w-100 px-3 pb-1">
     <div class="@divClass" @onclick="onAction">
         <input type="text" class="form-control" placeholder="Region">
         @if (showActions)
@@ -17,8 +17,33 @@
             </div>
         }
     </div>
-</div>
+</div> *@
 
+<div class="w-100 px-3 pb-1">
+    @foreach (var field in fields)
+    {
+        @*style = "width: @divWidth" @ref = "divRef" id="myDiv" *@
+        <div class="@divClass" @onclick="onAction">
+            <label for="@field.Id">@field.Name :</label>
+            <input type="text" class="form-control form-control-sm" id="@field.Id" @bind="field.Value" />
+            @if (showActions)
+            {
+                <div class="d-flex align-items-ceneter justify-content-end pt-2">
+                    @* @onclick="HandleButtonClick" *@
+                    <button type="button" class="btn btn-outline-light btn-sm">
+                        <i class="fa-solid fa-grip"></i>
+                    </button>
+                    <button type="button" class="btn btn-outline-info btn-sm mx-3" @onclick="DuplicateField">
+                        <i class="fa-solid fa-copy"></i>
+                    </button>
+                    <button type="button" class="btn btn-outline-danger btn-sm" @onclick="(() => OnRemove(field.Id))">
+                        <i class="fa-solid fa-square-minus"></i>
+                    </button>
+                </div>
+            }
+        </div>
+    }
+</div>
 <style>
     .selected {
         border: 2px solid lightblue !important;
@@ -41,6 +66,28 @@
         {
             divClass = "p-2";
             showActions = false;
+        }
+    }
+    [Inject]
+    public IJSRuntime? JSRuntime { get; set; }
+
+    private List<FieldModel> fields = new List<FieldModel>
+    {
+        new FieldModel { Id = 1, Name = "Region", Value = "Region" },
+    };
+    private int nextId = 1;
+
+    private void DuplicateField()
+    {
+        fields.Add(new FieldModel { Id = nextId++, Name = "Region", Value = "Region" });
+    }
+
+    private void OnRemove(int? RecordId)
+    {
+        var rowId = fields.FirstOrDefault(x => x.Id == RecordId);
+        if (rowId != null)
+        {
+            fields.Remove(rowId);
         }
     }
 }
